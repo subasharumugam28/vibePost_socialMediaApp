@@ -1,0 +1,68 @@
+
+
+/* GRID */
+.homepagemain {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+
+/* CARD */
+.homepagesub {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  transition: 0.3s;
+}
+
+.homepagesub:hover {
+  transform: translateY(-5px);
+}
+
+.image-box {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #f3f4f6;
+}
+
+.homepageimg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* TEXT */
+.title {
+  margin: 0;
+  font-size: 16px;
+  text-align: center;
+}
+
+.price {
+  cursor: pointer;
+  color: green;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+
+  .homepagemain {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .image-box {
+    height: 250px;
+  }
+}
