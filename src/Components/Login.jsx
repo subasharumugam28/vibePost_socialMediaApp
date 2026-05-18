@@ -46,7 +46,7 @@ api.post("login",{username,password}).then((res) =>
 
         <div className='page'>
         <div className="main">
-            <div className='sub'><img className='img'  alt="login image" src={img} loading="lazy"></img></div>
+            <div className='sub'><img className='img' src={img} alt="User login illustration" loading="lazy"></img></div>
             <div className="sub"><input type='text' autoComplete='on' placeholder='USERNAME'{...formik.getFieldProps("username")}  />{formik.touched.username && formik.errors.username && <span>{formik.errors.username}</span>}</div>
             <div className="sub"><input type='password' placeholder='PASSWORD' {...formik.getFieldProps("password")} />{formik.touched.password && formik.errors.password && <span>{formik.errors.password}</span>}</div>
             <div className='sub'><button type="submit" className="button">
