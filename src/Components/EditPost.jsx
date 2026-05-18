@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import  {  useState } from "react";
 import api from "../Api/Axios";
 import '../Styles/Post.css'
 import { useLocation} from'react-router-dom'
@@ -7,15 +7,9 @@ import { useCallback } from "react";
 function EditPost(){
       const navigate = useNavigate();
     const location=useLocation();
-    const [id,setId]=useState(location.state.data?._id||"")
+    const [id]=useState(location.state.data?._id||"")
     const [text, setText] = useState(location.state.data?.text || "");
-useEffect(()=>{
-console.log("lcid",id);
-console.log("lcid",text);
 
-
-console.log("lc",location);
-},[])
   const handleSubmit = useCallback(async (e) => {
     
     e.preventDefault();
@@ -28,7 +22,7 @@ console.log("lc",location);
         {text}
       ).then(()=>{navigate("/mypost")});
 
-    
+    updateRes();
 
 
     } catch (err) {

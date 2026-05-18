@@ -18,15 +18,10 @@ function Signup() {
     },
 
     validationSchema:yup.object({
-    name:yup.string().
-    min(3,"too short").
-    required("please enter name"),
+    name:yup.string().min(3,"too short").required("please enter name"),
     username:yup.string().min(3,"too short").required("please enter username"),
-    password:yup.string().
-    min(6,"minimum six character required").
-    required("plese enter password"),
-    confirmpassword:yup.string()
-    .oneOf([yup.ref("password")], "Passwords must match").required("please enter confirm password")
+    password:yup.string().min(6,"minimum six character required").required("plese enter password"),
+    confirmpassword:yup.string().oneOf([yup.ref("password")], "Passwords must match").required("please enter confirm password")
 
 }),
 onSubmit:async (values)=>{
