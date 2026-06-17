@@ -35,9 +35,9 @@ api.post("login",{username,password}).then((res) =>
     
   .catch(err => {
     setLoading(false);
-       setInvalidUsername(err.response.data.message);
+    setInvalidUsername(err.response?.data?.message || "Login failed");
     console.log(err.response?.data?.message);
-  });
+});
 
             }
             catch(err){
