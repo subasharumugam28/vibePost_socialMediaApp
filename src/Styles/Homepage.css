@@ -54,6 +54,10 @@
   cursor: pointer;
   color: green;
   font-weight: bold;
+    -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* IE/Edge */
+  user-select: none;   
 }
 
 @media screen and (max-width: 768px) {

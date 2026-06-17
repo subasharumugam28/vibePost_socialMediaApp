@@ -5,8 +5,11 @@ import {useFormik} from 'formik'
 import * as yup from 'yup'
 import api from "../Api/Axios";
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 function Login(){
     const navigate=useNavigate();
+      const [loading, setLoading] = useState(false);
+      const [InvalidUsername,setInvalidUsername]=useState("");
     const formik=useFormik({
         initialValues:{
             username:"",
@@ -18,9 +21,12 @@ function Login(){
         }),
         onSubmit:async (value)=>{
             try{
+                   setLoading(true);
 const {username,password}=value;
 api.post("login",{username,password}).then((res) => 
-    {navigate("/homepage")
+    {
+     
+        navigate("/homepage")
         
     const id=res.data.user._id
     localStorage.setItem("userId",id)
@@ -28,6 +34,8 @@ api.post("login",{username,password}).then((res) =>
 })
     
   .catch(err => {
+    setLoading(false);
+       setInvalidUsername(err.response.data.message);
     console.log(err.response?.data?.message);
   });
 
@@ -41,6 +49,17 @@ api.post("login",{username,password}).then((res) =>
             }
         }
     })
+
+    if(loading) {
+  return <h1  style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        margin: 0,
+        fontSize: "clamp(18px, 5vw, 28px)",
+      }}>LOADING...</h1>}
+else{
     return(
             <form onSubmit={formik.handleSubmit}>
 
@@ -52,6 +71,7 @@ api.post("login",{username,password}).then((res) =>
             <div className='sub'><button type="submit" className="button">
   LOGIN
 </button>
+{InvalidUsername && <h3>{InvalidUsername}</h3>}
 </div>       
                    <div className='sub'><Link to="/">GO TO SIGNUP PAGE</Link></div>
                    
@@ -59,7 +79,7 @@ api.post("login",{username,password}).then((res) =>
                    </div>
                    </form>
 
-    )
+    )}
 }
 
 export default Login

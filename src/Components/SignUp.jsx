@@ -9,6 +9,7 @@ import { useState } from 'react';
 function Signup() {
     const [usernameAlreadyExist,setUsernameAlreadyExist]=useState("");
     const navigate=useNavigate();
+          const [loading, setLoading] = useState(false);
     const formik =useFormik({
     initialValues:{
         name:"",
@@ -26,6 +27,7 @@ function Signup() {
 }),
 onSubmit:async (values)=>{
     try{
+        setLoading(true);
     const {confirmpassword,...data}=values;
 const res=await api.post( "signup",data).then((res)=>
     {navigate("/homepage")    
@@ -37,16 +39,29 @@ console.log(res.data)
     console.log(values)}
   catch(error){
    if (error.response?.status === 400)
+    setLoading(false);
 {    setUsernameAlreadyExist(error.response.data.message);
   console.log(error.response.data.message)}
 }
 }
 })
+   if(loading) {
+  return <h1  style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        margin: 0,
+        fontSize: "clamp(18px, 5vw, 28px)",
+      }}>LOADING...</h1>}
+else{
     return (
+        
                 <form onSubmit={formik.handleSubmit} noValidate>
 
         <div className="page">
             <div className="main">
+               
                 <div className='sub'>
                     <img className='img' src={img} alt="Company Logo" loading="lazy"/>
                 </div>
@@ -79,7 +94,7 @@ console.log(res.data)
         </div>
                 </form>
 
-    );
+    );}
 }
 
 export default Signup;
