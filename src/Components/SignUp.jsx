@@ -37,11 +37,10 @@ const res=await api.post( "signup",data).then((res)=>
 console.log(data)
 console.log(res.data)
     console.log(values)}
-  catch(error){
-   if (error.response?.status === 400)
+catch(error){
     setLoading(false);
-{    setUsernameAlreadyExist(error.response.data.message);
-  console.log(error.response.data.message)}
+    setUsernameAlreadyExist(error.response?.data?.message || "Something went wrong");
+    console.log(error);
 }
 }
 })

@@ -8,16 +8,7 @@
     min-height: 100vh; 
     width: 100vw;
 }
-.signup-title {
-    text-align: center;
-    margin: 10px 0;
-}
 
-.signup-subtitle {
-    text-align: center;
-    color: gray;
-    margin-bottom: 20px;
-}
 .main {
     background-color: white;
     display: flex;
