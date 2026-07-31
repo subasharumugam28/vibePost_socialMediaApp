@@ -31,15 +31,12 @@ onSubmit:async (values)=>{
     try{
         setLoading(true);
     const {confirmpassword,...data}=values;
-const res=await api.post( "signup",data).then((res)=>
-    {navigate("/homepage")    
-    const id=res.data.user._id
-  localStorage.setItem("token", res.data.token);
+await api.post("signup", data).then((res) => {
+    navigate("/homepage");
 
-    localStorage.setItem(
-        "userId",
-        res.data.user._id
-    );})
+    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("userId", res.data.user._id);
+});
 console.log(data)
 
     console.log(values)}

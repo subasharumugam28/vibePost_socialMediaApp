@@ -22,7 +22,6 @@ function HomePage() {
 const [loading, setLoading] = useState(true);
 
 useEffect(() => {
-  console.log("role is",role.role)
   const fetchPosts = async () => {
     try {
       const res = await api.get("/posts");
