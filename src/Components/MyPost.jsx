@@ -53,7 +53,7 @@ const postLike=(async (data)=>{
     try {
       const userId = localStorage.getItem("userId");
 
-      const res = await api.get(`mypost/${userId}`);
+      const res = await api.get(`/mypost/${userId}`);
 
       setMyPost(res.data);
  }catch(err){

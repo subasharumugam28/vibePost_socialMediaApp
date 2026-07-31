@@ -1,10 +1,15 @@
-import express, { request } from 'express'
+import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import multer from "multer";
 import pkg from "cloudinary";
 import fs from "fs";
 import dotenv from "dotenv";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import authorize from './middleware/authorize.js';
+import authenticate from './middleware/authenticate.js';
+
 dotenv.config();
 const { v2: cloudinary } = pkg;
 
@@ -29,7 +34,12 @@ mongoose.connect(process.env.MONGO_URI)
 const userSchema=new mongoose.Schema({
     name:String,
     username:String,
-    password:String
+    password:String,
+    role:{
+        type:String,
+        enum:["user","admin"],
+        default:"user"
+    }
 })
 
 const User=mongoose.model("User",userSchema)
@@ -59,7 +69,7 @@ userId:{
 text:String,
 createdAt:{
     type:Date,
-    Default:Date.now
+    default:Date.now
 }
     }]
 
@@ -69,14 +79,31 @@ const Post=mongoose.model("Post",postSchema)
 app.post("/signup",async (req,res)=>{
     try{
         console.log("body",req.body)
-    const {name,username,password}=req.body;
-    console.log(name,username,password)
+    const {name,username,password,role}=req.body;
+    const hashedPassword=await bcrypt.hash(password,10);
+    console.log(hashedPassword);
     const existing=await User.findOne({username});
     if(existing){
         return res.status(400).json({message:"username already exists"})
     }
-    const user=await User.create({name,username,password});
-    res.json({message:"user created",user});
+const user = await User.create({
+    name,
+    username,
+    password: hashedPassword,
+    role: role
+});
+    const token=jwt.sign({
+        id:user.id,
+        role:user.role
+    },process.env.JWT_SECRET,{expiresIn:"1h",
+        
+    })
+
+res.json({
+    message: "user created",
+    user,
+    token
+});  
     }
   catch(err){
   console.log("ERROR:", err);
@@ -84,14 +111,29 @@ app.post("/signup",async (req,res)=>{
 }
 })
 app.post("/login",async (req,res)=>{
-    const {username,password}=req.body;
-    let user=await User.findOne({username,password});
+    const {username,password,role}=req.body;
+
+    let user=await User.findOne({username});
     if (!user) {
-      return res.status(400).json({ message: "Invalid username or password" });
+      return res.status(400).json({ message: "Invalid username" });
     }
-    res.json({message:"user exists",user})
+        const valid=await bcrypt.compare(req.body.password,user.password)
+
+    if(!valid){
+        return res.status(401).json({message:"invalid password"})
+    }
+    const token=jwt.sign({
+        id:user.id,
+        role:user.role
+    },process.env.JWT_SECRET,{expiresIn:"1h",
+        
+    })
+
+    res.json({message:"user exists",user,token})
+ 
 })
-app.post("/upload",upload.single("image"),async (req,res)=>{
+
+app.post("/upload",authenticate,upload.single("image"),async (req,res)=>{
     try{
 
         if (!req.file) {
@@ -113,17 +155,18 @@ app.post("/upload",upload.single("image"),async (req,res)=>{
         console.log("err",err)
     }
 })
-app.post("/post",async (req,res)=>{
+app.post("/post",authenticate,async (req,res)=>{
     try{
-const {image,text,userId}=req.body;
-const post =await Post.create({image,text,userId});
+const {image,text}=req.body;
+const post =await Post.create({image,text,userId:req.user.id});
 res.json(post)
     }
     catch(err){
         console.log(err)
     }
 })
-app.get("/posts",async (req,res)=>{
+
+app.get("/posts",authenticate,async (req,res)=>{
     try{
     const posts=await Post.find().sort({createdAt:-1}).populate("userId","name");
     res.json(posts);}
@@ -132,7 +175,7 @@ console.log(err)
     }
 })
 
-app.get("/mypost/:userid", async (req, res) => {
+app.get("/mypost/:userid", authenticate,async (req, res) => {
   try {
     const userId = req.params.userid;
 

@@ -9,12 +9,12 @@
     width: 100vw;
 }
 
-.main {
+.signupMain {
     background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 500px;
+    height: 580px;
     width: 500px;
     gap: 15px;
     flex-direction: column;
@@ -46,4 +46,19 @@
 }
 .sub .button:active{
     background-color: #003f7f;
+}
+.sub select {
+    display: block;
+    width: 262px;
+    height: 47px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+}
+
+.sub select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
 }

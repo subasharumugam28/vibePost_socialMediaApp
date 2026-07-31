@@ -1,0 +1,9 @@
+const authorize=(...roles)=>{
+    return (req,res,next)=>{
+        if(!roles.includes(req.user.role)){
+            return res.status.json({message:"forbidden"})
+        }
+        next();
+    }
+}
+export default authorize;

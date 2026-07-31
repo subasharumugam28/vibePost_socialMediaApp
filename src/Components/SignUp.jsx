@@ -6,6 +6,7 @@ import * as yup from 'yup'
 import api from "../Api/Axios";
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+
 function Signup() {
     const [usernameAlreadyExist,setUsernameAlreadyExist]=useState("");
     const navigate=useNavigate();
@@ -15,15 +16,16 @@ function Signup() {
         name:"",
         username:"",
         password:"",
-        confirmpassword:""
+        confirmpassword:"",
+        role:"user"
     },
 
     validationSchema:yup.object({
     name:yup.string().min(3,"too short").required("please enter name"),
     username:yup.string().min(3,"too short").required("please enter username"),
     password:yup.string().min(6,"minimum six character required").required("plese enter password"),
-    confirmpassword:yup.string().oneOf([yup.ref("password")], "Passwords must match").required("please enter confirm password")
-
+    confirmpassword:yup.string().oneOf([yup.ref("password")], "Passwords must match").required("please enter confirm password"),
+    role:yup.string().oneOf(["user","admin"]).required("please select a role")
 }),
 onSubmit:async (values)=>{
     try{
@@ -32,10 +34,14 @@ onSubmit:async (values)=>{
 const res=await api.post( "signup",data).then((res)=>
     {navigate("/homepage")    
     const id=res.data.user._id
-    localStorage.setItem("userId",id)
-})
+  localStorage.setItem("token", res.data.token);
+
+    localStorage.setItem(
+        "userId",
+        res.data.user._id
+    );})
 console.log(data)
-console.log(res.data)
+
     console.log(values)}
 catch(error){
     setLoading(false);
@@ -59,7 +65,7 @@ else{
                 <form onSubmit={formik.handleSubmit} noValidate>
 
         <div className="page">
-            <div className="main">
+            <div className="signupMain">
                
                 <div className='sub'>
                     <img className='img' src={img} alt="Company Logo" loading="lazy"/>
@@ -79,7 +85,20 @@ else{
                 <div className="sub">
                     <input type='password' placeholder='CONFIRM PASSWORD' aria-label="Confirm Password" {...formik.getFieldProps("confirmpassword")}/>
                 {formik.touched.confirmpassword&&formik.errors.confirmpassword&&<span>{formik.errors.confirmpassword}</span>}
-                </div> 
+                </div>
+                <div className="sub">
+    <select
+        aria-label="Role"
+        {...formik.getFieldProps("role")}
+    >
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+    </select>
+
+    {formik.touched.role && formik.errors.role && (
+        <span>{formik.errors.role}</span>
+    )}
+</div> 
                 <div className='sub'>
                   <button className="button" type="submit">
   SIGN UP

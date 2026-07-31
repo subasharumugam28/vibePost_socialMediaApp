@@ -23,9 +23,14 @@ function Login(){
             try{
                    setLoading(true);
 const {username,password}=value;
-api.post("login",{username,password}).then((res) => 
+api.post("/login",{username,password}).then((res) => 
     {
-     
+      localStorage.setItem("token", res.data.token);
+
+    localStorage.setItem(
+        "userId",
+        res.data.user._id
+    );
         navigate("/homepage")
         
     const id=res.data.user._id

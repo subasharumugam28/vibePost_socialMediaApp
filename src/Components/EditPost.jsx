@@ -20,7 +20,7 @@ function EditPost(){
       const updateRes = await api.put(
         `updatepost/${id}`,
         {text}
-      ).then(()=>{navigate("/mypost")});
+      ).then(()=>{navigate("/homepage")});
 
     updateRes();
 
