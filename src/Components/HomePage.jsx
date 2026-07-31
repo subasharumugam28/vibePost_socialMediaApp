@@ -35,7 +35,7 @@ useEffect(() => {
   };
 
   fetchPosts();
-}, []);
+}, [role.role]);
 const deletePost = async (id) => {
     try {
       await api.delete(`deletepost/${id}`);

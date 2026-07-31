@@ -31,9 +31,8 @@ onSubmit:async (values)=>{
     try{
         setLoading(true);
     const {confirmpassword,...data}=values;
-const res=await api.post( "signup",data).then((res)=>
-    {navigate("/homepage")    
-    const id=res.data.user._id
+await api.post( "signup",data).then((res)=>
+    {navigate("/homepage")
   localStorage.setItem("token", res.data.token);
 
     localStorage.setItem(
