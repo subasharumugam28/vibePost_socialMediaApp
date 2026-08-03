@@ -7,7 +7,10 @@ import React from "react";
 function NavBar() {
   const location = useLocation();
   const pathName = location.pathname;
-
+const logOut=()=>{
+  localStorage.removeItem("token");
+  localStorage.removeItem("userId");
+}
   return (
     <div className="homepagenavbar">
 
@@ -39,7 +42,7 @@ function NavBar() {
           )}
 
           <Link to="/login">
-            <Button variant="contained">Logout</Button>
+            <Button variant="contained" onClick={logOut}>Logout</Button>
           </Link>
 
         </Stack>

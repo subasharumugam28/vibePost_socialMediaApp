@@ -63,7 +63,7 @@ api.post("/login",{username,password}).then((res) =>
         height: "100vh",
         margin: 0,
         fontSize: "clamp(18px, 5vw, 28px)",
-      }}>LOADING...</h1>}
+      }}>Our server is starting up. Initial loading may take around 30–40 seconds please dont exit....</h1>}
 else{
     return(
             <form onSubmit={formik.handleSubmit}>
