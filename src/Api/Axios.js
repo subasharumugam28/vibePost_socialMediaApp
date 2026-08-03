@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api=axios.create({
-    // baseURL:"https://vibepost-socialmediaapp-2.onrender.com",
-       baseURL: "http://localhost:5000"
+    baseURL:"https://vibepost-socialmediaapp-2.onrender.com",
+    //    baseURL: "http://localhost:5000"
     // timeout:10000,
 },
 )
