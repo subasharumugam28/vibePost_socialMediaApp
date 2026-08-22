@@ -76,6 +76,9 @@ createdAt:{
 },{timestamps:true})
 
 const Post=mongoose.model("Post",postSchema)
+app.get("/ping",(req,res)=>{
+    res.status(200).json({message:"ok"})
+})
 app.post("/signup",async (req,res)=>{
     try{
         console.log("body",req.body)

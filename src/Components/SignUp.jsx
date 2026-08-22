@@ -5,9 +5,12 @@ import {useFormik} from 'formik'
 import * as yup from 'yup'
 import api from "../Api/Axios";
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 
 function Signup() {
+    useEffect(()=>{
+api.get("/ping")
+},[])
     const [usernameAlreadyExist,setUsernameAlreadyExist]=useState("");
     const navigate=useNavigate();
           const [loading, setLoading] = useState(false);
@@ -27,6 +30,7 @@ function Signup() {
     confirmpassword:yup.string().oneOf([yup.ref("password")], "Passwords must match").required("please enter confirm password"),
     role:yup.string().oneOf(["user","admin"]).required("please select a role")
 }),
+
 onSubmit:async (values)=>{
     try{
         setLoading(true);
