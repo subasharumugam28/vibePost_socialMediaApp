@@ -76,8 +76,11 @@ createdAt:{
 },{timestamps:true})
 
 const Post=mongoose.model("Post",postSchema)
-app.get("/ping",(req,res)=>{
-    res.status(200).json({message:"ok"})
+app.get("/health",(req,res)=>{
+    res.status(200).json({
+        status:"ok",
+        message:"server is awake"
+    })
 })
 app.post("/signup",async (req,res)=>{
     try{

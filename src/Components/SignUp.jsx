@@ -8,9 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { useState,useEffect } from 'react';
 
 function Signup() {
-    useEffect(()=>{
-api.get("/ping")
-},[])
     const [usernameAlreadyExist,setUsernameAlreadyExist]=useState("");
     const navigate=useNavigate();
           const [loading, setLoading] = useState(false);
