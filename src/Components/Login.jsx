@@ -6,6 +6,9 @@ import * as yup from 'yup'
 import api from "../Api/Axios";
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+
 function Login(){
     const navigate=useNavigate();
       const [loading, setLoading] = useState(false);
@@ -63,7 +66,9 @@ api.post("/login",{username,password}).then((res) =>
         height: "100vh",
         margin: 0,
         fontSize: "clamp(18px, 5vw, 28px)",
-      }}>Our server is starting up. Initial loading may take around 30–40 seconds please dont exit....</h1>}
+      }}><Box sx={{ display: 'flex' }}>
+            <CircularProgress size={"55px"} aria-label="Loading…" />
+          </Box></h1>}
 else{
     return(
             <form onSubmit={formik.handleSubmit}>

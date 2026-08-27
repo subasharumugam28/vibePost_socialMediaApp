@@ -6,6 +6,8 @@ import * as yup from 'yup'
 import api from "../Api/Axios";
 import { useNavigate } from 'react-router-dom';
 import { useState,useEffect } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 function Signup() {
     const [usernameAlreadyExist,setUsernameAlreadyExist]=useState("");
@@ -56,7 +58,9 @@ catch(error){
         height: "100vh",
         margin: 0,
         fontSize: "clamp(18px, 5vw, 28px)",
-      }}>Our server is starting up. Initial loading may take around 30–40 seconds please dont exit.......</h1>}
+      }}><Box sx={{ display: 'flex' }}>
+      <CircularProgress size={"55px"} aria-label="Loading…" />
+    </Box></h1>}
 else{
     return (
         

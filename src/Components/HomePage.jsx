@@ -6,7 +6,8 @@ import api from "../Api/Axios";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
-
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 const gettRoleFromToken=()=>{
 const token=localStorage.getItem("token");
 if(!token){
@@ -76,7 +77,11 @@ if(loading) {
         height: "100vh",
         margin: 0,
         fontSize: "clamp(18px, 5vw, 28px)",
-      }}>LOADING...</h1>}
+      }}>
+        <Box sx={{ display: 'flex' }}>
+      <CircularProgress size={"55px"} aria-label="Loading…" />
+    </Box>
+        </h1>}
 else{
   return (
     <>

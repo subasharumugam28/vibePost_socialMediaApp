@@ -3,6 +3,9 @@ import api from "../Api/Axios";
 import '../Styles/Post.css'
 
 import { useNavigate } from "react-router-dom";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+
 function Post(){
       const navigate = useNavigate();
 
@@ -60,7 +63,9 @@ if(posted) {
         height: "100vh",
         margin: 0,
         fontSize: "clamp(18px, 5vw, 28px)",
-      }}>UPLOADING, PLEASE WAIT IT TAKE A WHILE, DON'T REFRESH THE PAGE.</h1>}
+      }}><Box sx={{ display: 'flex' }}>
+      <CircularProgress size={"55px"} aria-label="Loading…" />
+    </Box></h1>}
 else{return <> 
 
 
