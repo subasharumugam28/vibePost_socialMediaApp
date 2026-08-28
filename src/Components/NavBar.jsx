@@ -7,9 +7,11 @@ import React from "react";
 function NavBar() {
   const location = useLocation();
   const pathName = location.pathname;
+  const name=localStorage.getItem("name");
 const logOut=()=>{
   localStorage.removeItem("token");
   localStorage.removeItem("userId");
+  localStorage.removeItem("name");
 }
   return (
     <div className="homepagenavbar">
@@ -27,6 +29,7 @@ const logOut=()=>{
       {/* RIGHT - YOUR ORIGINAL LOGIC KEPT */}
       <div className="nav-right">
 
+<h3 className="welcome-text">HELLO {name.toLocaleUpperCase()}</h3>
         <Stack spacing={2} direction="row">
 
           {pathName === "/post" || (
@@ -40,7 +43,6 @@ const logOut=()=>{
               <Button variant="contained">My Post</Button>
             </Link>
           )}
-
           <Link to="/login">
             <Button variant="contained" onClick={logOut}>Logout</Button>
           </Link>

@@ -2,11 +2,9 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-
   height: 80px;
   background-color: #007bff;
   padding: 0 20px;
@@ -36,19 +34,31 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  gap: 10px;
+}
+
+/* HELLO TEXT */
+.welcome-text {
+  color: white;
+  margin: 0;
+  padding-left: 10px;
+  order: 2;
+}
+
+.nav-right .MuiStack-root {
+  order: 1;
 }
 
 /* =========================
-   MOBILE FIX (IMPORTANT PART)
+   MOBILE
    ========================= */
-
 @media (max-width: 768px) {
   .homepagenavbar {
     height: auto;
-    padding: 10px;
+    padding: 5px 10px;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
-    row-gap: 10px;
+    row-gap: 2px;
   }
 
   .nav-left {
@@ -57,34 +67,51 @@
   }
 
   .nav-left img {
-    height: 50px;
+    height: 45px;
   }
 
   .nav-center {
-    display: none; /* remove empty space on mobile */
+    display: none;
   }
 
   .nav-right {
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
     width: 100%;
+    gap: 2px;
+  }
+
+  .welcome-text {
+    order: -1;
+    margin: 0 0 3px 0;
+    padding: 0;
+    font-size: 16px;
   }
 
   .nav-right .MuiStack-root {
     justify-content: center;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 5px;
   }
 
   .nav-right button {
-    font-size: 12px;
-    padding: 6px 10px;
+    font-size: 11px;
+    padding: 5px 8px;
   }
 }
 
-/* SMALL PHONES */
+/* =========================
+   SMALL PHONES
+   ========================= */
 @media (max-width: 480px) {
+
   .nav-left img {
     height: 42px;
+  }
+
+  .welcome-text {
+    font-size: 16px;
   }
 
   .nav-right button {

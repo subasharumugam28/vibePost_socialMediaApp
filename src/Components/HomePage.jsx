@@ -92,8 +92,8 @@ else{
           {posts?.map((post) => (
             
             <div key={post._id} className='homepagesub'>
-
               {/* IMAGE BOX */}
+              <h3 className='title' style={{color:"#007bff"}}>@{post.userId.name}</h3>
               <div className="image-box">
                 <img
                   className='homepageimg'

@@ -29,6 +29,7 @@ const {username,password}=value;
 api.post("/login",{username,password}).then((res) => 
     {
       localStorage.setItem("token", res.data.token);
+localStorage.setItem("name",res.data.user.name)
 
     localStorage.setItem(
         "userId",
