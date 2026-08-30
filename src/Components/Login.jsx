@@ -19,7 +19,7 @@ function Login(){
             password:""
         },
         validationSchema:yup.object({
-            username:yup.string().min(6,"too short").required("please enter username"),
+            username:yup.string().min(3,"too short").required("please enter username"),
             password:yup.string().min(6,"please enter valid password").required("please enter password")
         }),
         onSubmit:async (value)=>{

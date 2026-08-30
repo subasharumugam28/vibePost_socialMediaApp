@@ -203,27 +203,61 @@ catch(err){
    res.status(500).json({ message: "Error updating post" });
 }    
 })
-app.put("/likepost/:postid",async (req,res)=>{
-    try{
-    const _id =req.params.postid;
-    const post=await Post.findById(_id);
-    const userid=req.body.userid;
-    const likedpost = post.likes.some(
-  (id) => id.toString() === userid
-);
-    if(!likedpost){
-        post.likes.push(userid)
+app.put("/likepost/:postid", async (req, res) => {
+  try {
+    const postid = req.params.postid;
+    const userid = req.body.userid;
+
+    // Find the post
+    const post = await Post.findById(postid);
+
+    if (!post) {
+      return res.status(404).json({
+        message: "Post not found"
+      });
     }
-    else{
-        post.likes=post.likes.filter((id)=>id.toString()!==userid)
+
+    // Check if user already liked
+    const liked = post.likes.some(
+      id => id.toString() === userid
+    );
+
+    let updatedPost;
+
+    if (liked) {
+      // Unlike
+      updatedPost = await Post.findByIdAndUpdate(
+        postid,
+        {
+          $pull: {
+            likes: userid
+          }
+        },
+        { new: true }
+      );
+    } else {
+      // Like
+      updatedPost = await Post.findByIdAndUpdate(
+        postid,
+        {
+          $addToSet: {
+            likes: userid
+          }
+        },
+        { new: true }
+      );
     }
-post.save();
-res.json(post);
-    }
-    catch(err){
-console.log(err)
-    }
-})
+
+    res.json(updatedPost);
+
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      message: "Server error"
+    });
+  }
+});
 app.delete("/deletepost/:id",async (req,res)=>{
     try{
         console.log(req.params.id)
