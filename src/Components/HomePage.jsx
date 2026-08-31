@@ -54,21 +54,22 @@ const deletePost = async (id) => {
    
   }
 
-const postLike=(  useCallback( async (data)=>{
+const postLike=(   async (data)=>{
   try{
   const id=data._id;
   const userid=localStorage.getItem("userId");
   const response=await api.put(`likepost/${id}`,  { userid })
      setPosts((prevPosts) =>
       prevPosts.map((post) =>
-        post._id === id ? response.data : post
+        post._id === id ? {...response.data,          userId: post.userId,
+} : post
       )
     );
   }
     catch(err){
       console.log(err);
     }
-},[]))
+})
 if(loading) {
   return <h1  style={{
         display: "flex",
