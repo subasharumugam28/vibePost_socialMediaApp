@@ -124,7 +124,15 @@ else{
           
         >
           
-  {post.likes?.includes(localStorage.getItem("userId")) ? "❤️" : "🤍"}
+
+
+
+          
+{post.likes?.some(
+  (like) => like.toString() === localStorage.getItem("userId")
+)
+  ? "❤️"
+  : "🤍"}
         </span>
 
         {" "}
